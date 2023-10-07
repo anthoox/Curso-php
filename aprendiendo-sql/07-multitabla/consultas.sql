@@ -31,3 +31,19 @@ SELECT e.id, e.titulo, u.nombre AS 'Autor', c.nombre AS 'Categorias'
 FROM entradas e
 INNER JOIN usuarios u ON e.usuario_id = u.id
 INNER JOIN categorias c ON e.categoria_id = c.id;
+
+#Mostrar el nombre de las categorias y al lado cuantas entradas tienen con INNER JOIN#
+SELECT c.nombre, COUNT(e.id) FROM categorias c
+INNER JOIN entradas e ON e.categoria_id = c.id
+GROUP BY categoria_id;
+
+#CON LEFT JOIN#
+SELECT c.nombre, COUNT(e.id) FROM categorias c
+LEFT JOIN entradas e ON e.categoria_id = c.id
+GROUP BY categoria_id;
+-- Muestra todo y las coincidencias, no como la anterior, que solo muestra las coincidencias. Left join nos mantiene todas las filas de la tabla de la izquierda
+
+#CON RIGHT JOIN#
+SELECT c.nombre, COUNT(e.id) FROM entradas e
+RIGHT JOIN categorias c ON e.categoria_id = c.id
+GROUP BY categoria_id;
