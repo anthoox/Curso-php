@@ -1,6 +1,13 @@
 <!-- helpers.php lo hereda de cabecera -->
  <!-- SIDEBAR -->
  <aside id="sidebar">
+    <div id="buscador" class="bloque">
+        <h3>Buscar</h3>
+        <form action="buscar.php" method="POST">
+            <input type="text" name="busqueda"/>
+            <input type="submit" value="Buscar"/>
+        </form>
+    </div>
     <?php if(isset($_SESSION['usuario'])):?>
         <div id="login" class="bloque">
             <h3>Bienvenido <?=$_SESSION['usuario']['nombre'] . ' ' .$_SESSION['usuario']['apellidos'];?></h3>
@@ -12,6 +19,8 @@
         <!-- Botones -->
         
     <?php endif;?>
+
+
     <!-- Si no existe la sesión que muestre los panales de sesión -->
     <?php if(!isset($_SESSION['usuario'])):?>
         <div id="login" class="bloque">

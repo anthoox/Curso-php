@@ -24,18 +24,30 @@ if(isset($_POST)){
         $errores['categoria'] = "La categoria no es válida";
     }
 
-    // var_dump($errores);
-    // die();
-  
+    
     if(count($errores) == 0){
-        $sql = "INSERT INTO entradas VALUES(null,'$usuario', '$categoria', '$titulo', '$descripcion', CURDATE());";
+        if(isset($_GET['editar'])){
+            $entrada_id = $_GET['editar'];
+            $sql = "UPDATE entradas SET titulo='$titulo', categoria_id='$categoria', descripcion='$descripcion' ".
+                    " WHERE id = $entrada_id AND usuario_id = $usuario";
+                    $result = mysqli_query($db, $sql);
+                    // echo mysqli_error($db);
+                    // die();
+        }else{
+            $sql = "INSERT INTO entradas VALUES(null,'$usuario', '$categoria', '$titulo', '$descripcion', CURDATE());";
+
+        }
+        
         $guardar = mysqli_query($db, $sql);
         header('Location: index.php');
 
-
     }else{
         $_SESSION['errores_entrada'] = $errores;
-        header('Location: crear-entradas.php');
+        if(isset($_GET['editar'])){
+            header('Location: editar-entrada.php?id=' . $_GET['editar']);
+        }else{
+            header('Location: crear-entradas.php');
+        }
     }
 
 }

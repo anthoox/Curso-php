@@ -163,16 +163,18 @@ input[type="submit"],
     margin-bottom: 5px;
     display: block;
     border-radius: 2px;
-    color: white;
+    color: white !important;
     background-color: #007ee5 ;
     border: 1px solid #156785;
     cursor: pointer;
     padding: 5px 10px;
 }
 .boton{
+    color:white !important;
     text-align: center;
     width: 130px;
 }
+
 .boton-naranja{
     background-color: rgb(236, 161, 20);
     border-color: orange;
