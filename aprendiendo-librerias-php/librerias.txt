@@ -1,0 +1,3 @@
+Librerias para generar excel
+Librerias de email PHPMailer
+phpfastcache
