@@ -7,6 +7,7 @@ if(isset($_POST)){
     $nombre = isset($_POST['nombre']) ? mysqli_real_escape_string($db, $_POST['nombre']) : false;
 
     // Array de errores
+
     $errores = array();
     // Validar los datos antes de guardarlos en la base de datos
     // validar nombre
@@ -16,7 +17,7 @@ if(isset($_POST)){
         $nombre_valido = false;
         $errores['nombre'] = "El nombre no es valido";
     }
-  
+    
     if(count($errores) == 0){
         $sql = "INSERT INTO categorias VALUES(null, '$nombre');";
         $guardar = mysqli_query($db, $sql);
