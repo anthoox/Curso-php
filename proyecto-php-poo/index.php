@@ -1,101 +1,38 @@
-<!DOCTYPE HTML>
-<html lang="es">
-    <head>
-        <meta charset="utf-8"/>
-        <title>Tienda de camisetas</title>
-        <link rel="stylesheet" href="assets/css/style.css">
-    </head>
-    <body>
+<?php
 
-    <div id="container">
-        <!-- CABECERA -->
-        <header id="header">
-            <div id="logo">
-                <img src="assets/img/camiseta.png" alt="Logo camiseta"/>
-                <a href="index.php">
-                    Tienda de camisetas
-                </a>
-            </div>
-        </header>
+require_once 'autoload.php';
+require_once 'views/layout/header.php';
+require_once 'views/layout/sidebar.php';
 
-        <!-- MENU -->
-        <nav id ="menu">
-            <ul>
-                <li>
-                    <a href="#">Inicio</a>
-                </li>
-                <li>
-                    <a href="#">Categoría</a>
-                </li>
-                <li>
-                    <a href="#">Categoría</a>
-                </li>
-                <li>
-                    <a href="#">Categoría</a>
-                </li>
-            </ul>
-        </nav>
-        
-        <div id="content">
+$nombre_controlador = '';
 
-            <!-- BARRA LATERAL -->
-            <aside id="lateral">
-                <div id="login" class="block_aside">
-                    <h3>Entrar en la web</h3>
-                    <form action="" method="POST">
-                        <label for="email">Email</label>
-                        <input type="email" name="email"/>
+// Si existe lo que llega por GET
+if (isset($_GET['controller'])) {
+    $nombre_controlador = $_GET['controller'] . 'Controller';
+} else {
+    echo "La página que buscas no existe loco";
+    // Con lo siguiente para la ejecución y no ejecuta lo de abajo
+    exit();
+}
 
-                        <label for="password">Contraseña</label>
-                        <input type="password" name="password"/>
 
-                        <input type="submit" value="Enviar"/>
-                    </form>
-                    <ul>
-                        <li>
-                            <a href="#">Mis pedidos</a>
-                        </li>
-                        <li>
-                            <a href="#">Gestionar pedidos</a>
-                        </li>
-                        <li>
-                            <a href="#">Gestionar categorías</a>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+// Si existe la clase
+if (class_exists($nombre_controlador)) {
 
-            <!-- CONTENIDO CENTRAL -->
-            <main id="central">
-                <h1>Productos destacados</h1>
-                <div class="product">
-                    <img src="assets/img/camiseta.png"/>
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 Euros</p>
-                    <a class="button" href="">Comprar</a>
-                </div>
+    $controlador = new $nombre_controlador();
 
-                <div class="product">
-                    <img src="assets/img/camiseta.png"/>
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 Euros</p>
-                    <a class="button" href="">Comprar</a>
-                </div>
-                <div class="product">
-                    <img src="assets/img/camiseta.png"/>
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 Euros</p>
-                    <a class="button" href="">Comprar</a>
-                </div>
+    // Comprueba si existe una variable por la URL y si existe el metodo del controlador que se llame con el metodo introducido por la URL
+    if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
+        $action = $_GET['action'];
 
-            </main>
+        // Si se pone en la URL: ?action=crear, llama a la función crear del controlador, que viene de la clase UsuarioController() y muestra su contenido
+        $controlador->$action();
+    } else {
+        echo "La página que buscas no existe";
+    }
+} else {
+    echo "La página que buscas no existe wey";
+}
 
-        </div>
 
-        <!-- FOOTER -->
-        <footer id="footer">
-            <p>Desarrollado por Anthoox &copy; <?=date('Y')?></p>
-        </footer>
-        </div>
-    </body>
-</html>
+require_once 'views/layout/footer.php';
