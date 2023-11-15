@@ -16,6 +16,9 @@ function show_error()
 // Si existe lo que llega por GET
 if (isset($_GET['controller'])) {
     $nombre_controlador = $_GET['controller'] . 'Controller';
+    // Si no existe el controlador ni el metodo se asigna el valor por defecto
+} else if (!isset($_GET['controller']) && !isset($_GET['action'])) {
+    $nombre_controlador = controller_default;
 } else {
     show_error();
 }
@@ -29,6 +32,10 @@ if (class_exists($nombre_controlador)) {
     if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
         $action = $_GET['action'];
         $controlador->$action();
+        // Si no existe el controlador ni el metodo, que se carge la acción por defecto
+    } else if (!isset($_GET['controller']) && !isset($_GET['action'])) {
+        $action_defaul = action_default;
+        $controlador->$action_defaul();
     } else {
         show_error();
     }
