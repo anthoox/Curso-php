@@ -1,6 +1,7 @@
 <?php
 // conectamos con el modelo de usuario
 require_once 'models/usuario.php';
+require_once 'helpers/validatorForm.php';
 class UsuarioController
 {
 
@@ -19,12 +20,16 @@ class UsuarioController
      */
     public function save()
     {
-        if (isset($_POST)) {
+        $datos = ValidatorForm::validator($_POST);
+
+        // Validación simple de datos. Se podría crear una librería con validación
+        if ($datos) {
             $usuario = new Usuario();
-            $usuario->setNombre($_POST['nombre']);
-            $usuario->setApellidos($_POST['apellidos']);
-            $usuario->setEmail($_POST['email']);
-            $usuario->setPassword($_POST['password']);
+
+            $usuario->setNombre($datos['nombre']);
+            $usuario->setApellidos($datos['apellidos']);
+            $usuario->setEmail($datos['email']);
+            $usuario->setPassword($datos['password']);
 
             // Guardamos los datos en la base de datos con el método save
             $result = $usuario->save();
@@ -35,10 +40,11 @@ class UsuarioController
                 // echo "Registro fallido";
                 $_SESSION['register'] = "Failed";
             }
-            // var_dump($usuario);
         } else {
+            // echo "Registro fallido";
             $_SESSION['register'] = "Failed";
         }
+
         header("Location:" . base_url . 'usuario/registro');
     }
 }
