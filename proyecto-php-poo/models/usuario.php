@@ -61,14 +61,14 @@ class Usuario
 
     public function getPassword()
     {
-        return $this->password;
+        return password_hash($this->db->real_escape_string($this->password), PASSWORD_BCRYPT, ['cost' => 4]);
     }
 
 
     public function setPassword($password)
     {
         // Encriptamos la contraseña con password_hash hasta 4 veces
-        $this->password = password_hash($this->db->real_escape_string($password), PASSWORD_BCRYPT, ['cost' => 4]);
+        $this->password = $password;
     }
 
     public function getImagen()
@@ -104,6 +104,27 @@ class Usuario
             $result = true;
         }
 
+        return $result;
+    }
+
+    public function login()
+    {
+        $result = false;
+        $email = $this->email;
+        $password = $this->password;
+        // Comprobar si existe el usuario
+        $sql = "SELECT * FROM usuarios WHERE email = '$email'";
+        $login = $this->db->query($sql);
+
+        if ($login && $login->num_rows == 1) {
+            $usuario = $login->fetch_object();
+
+            // Verificar la contraseña
+            $verify = password_verify($password, $usuario->password);
+            if ($verify) {
+                $result = $usuario;
+            }
+        }
         return $result;
     }
 }

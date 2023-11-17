@@ -47,4 +47,29 @@ class UsuarioController
 
         header("Location:" . base_url . 'usuario/registro');
     }
+
+    public function login()
+    {
+        if (isset($_POST)) {
+
+
+
+            $usuario = new Usuario();
+            // Identificar el usuario
+            $usuario->setEmail($_POST['email']);
+            $usuario->setPassword($_POST['password']);
+            // Consulta a la base de datos
+            $identity = $usuario->login();
+            // Crear una sesión
+            if ($identity && is_object($identity)) {
+                $_SESSION['identity'] = $identity;
+                if ($identity->role == 'admin') {
+                    $_SESSION['admin'] = true;
+                }
+            } else {
+                $_SESSION['error_login'] = 'Identificación fallida';
+            }
+        }
+        header("Location:" . base_url);
+    }
 }
