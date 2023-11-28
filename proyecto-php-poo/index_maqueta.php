@@ -15,7 +15,7 @@
             <div id="logo">
                 <img src="assets/img/camiseta.png" alt="Logo camiseta" />
                 <a href="index.php">
-                    Tienda de camisetas
+                    Tienda de camisetas ways
                 </a>
             </div>
         </header>
