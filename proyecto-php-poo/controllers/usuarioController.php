@@ -52,8 +52,6 @@ class UsuarioController
     {
         if (isset($_POST)) {
 
-
-
             $usuario = new Usuario();
             // Identificar el usuario
             $usuario->setEmail($_POST['email']);
@@ -63,7 +61,8 @@ class UsuarioController
             // Crear una sesión
             if ($identity && is_object($identity)) {
                 $_SESSION['identity'] = $identity;
-                if ($identity->role == 'admin') {
+                // Si el rol es admin crea la sesión de admin
+                if ($identity->rol == 'admin') {
                     $_SESSION['admin'] = true;
                 }
             } else {
