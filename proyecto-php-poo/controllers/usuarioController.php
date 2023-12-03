@@ -72,4 +72,17 @@ class UsuarioController
         }
         header("Location:" . base_url);
     }
+
+    public function logout()
+    {
+        if (isset($_SESSION['identity'])) {
+            unset($_SESSION['identity']);
+        }
+
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
+
+        header('Location:' . base_url);
+    }
 }
