@@ -20,7 +20,7 @@
             <!-- Esto se muestra si la sesión de admin existe -->
             <?php if (isset($_SESSION['admin'])) : ?>
                 <li>
-                    <a href="#">Gestionar categorías</a>
+                    <a href="<?= base_url ?>categoria/index">Gestionar categorías</a>
                 </li>
                 <li>
                     <a href="#">Gestionar pedidos</a>
@@ -35,7 +35,11 @@
                     <a href="#">Mis pedidos</a>
                 </li>
                 <li>
-                    <a href="<?= base_url ?>usuario/logout">Cerra sesióin</a>
+                    <a href="<?= base_url ?>usuario/logout">Cerra sesión</a>
+                </li>
+            <?php else : ?>
+                <li>
+                    <a href="<?= base_url ?>usuario/registro">Registrate aquí</a>
                 </li>
             <?php endif; ?>
         </ul>
