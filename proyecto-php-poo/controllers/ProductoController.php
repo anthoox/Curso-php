@@ -5,8 +5,6 @@ class ProductoController
 
     public function index()
     {
-        // echo "Controlador producto, Acción index";
-
         // Renderizar vista
         require_once 'views/productos/destacados.php';
     }
@@ -46,25 +44,42 @@ class ProductoController
 
 
                 // Guardar la imagen
-                $file = $_FILES['imagen'];
-                $fileName = $file['name'];
-                $mimeType = $file['type'];
+                if (isset($_FILES['imagen'])) {
+                    $file = $_FILES['imagen'];
+                    $fileName = $file['name'];
+                    $mimeType = $file['type'];
 
-                if ($mimeType == "image/jpg" || $mimeType == "image/jpeg" || $mimeType == "image/png" || $mimeType == "image/git") {
-                    // Si no existe la carpeta uploads/images creala
-                    if (!is_dir('uploads/images')) {
-                        mkdir('uploads/images', 0777, true);
+                    if ($mimeType == "image/jpg" || $mimeType == "image/jpeg" || $mimeType == "image/png" || $mimeType == "image/git") {
+                        // Si no existe la carpeta uploads/images creala
+                        if (!is_dir('uploads/images')) {
+                            mkdir('uploads/images', 0777, true);
+                        }
+                        move_uploaded_file($file['tmp_name'], 'uploads/images/' . $file['name']);
+                        $producto->setImagen($fileName);
                     }
-                    move_uploaded_file($file['tmp_name'], 'uploads/images/' . $file['name']);
-                    $producto->setImagen($fileName);
                 }
 
-
-                $save = $producto->save();
-                if ($save) {
-                    $_SESSION['producto'] = 'Complete';
+                // Configuración para determinar si el metodo guarda o edita
+                if (isset($_GET['id'])) {
+                    $id = $_GET['id'];
+                    $producto->setId($id);
+                    $save = $producto->edit();
                 } else {
-                    $_SESSION['producto'] = 'failed-1';
+                    $save = $producto->save();
+                }
+
+                if (isset($_GET['id'])) {
+                    if ($save) {
+                        $_SESSION['editado'] = 'Complete';
+                    } else {
+                        $_SESSION['editado'] = 'failed-1';
+                    }
+                } else {
+                    if ($save) {
+                        $_SESSION['producto'] = 'Complete';
+                    } else {
+                        $_SESSION['producto'] = 'failed-1';
+                    }
                 }
             } else {
                 $_SESSION['producto'] = 'failed-2';
@@ -74,5 +89,41 @@ class ProductoController
         }
 
         header('Location:' . base_url . "producto/gestion");
+    }
+
+    public function editar()
+    {
+        Utils::isAdmin();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $edit = true;
+
+            $producto = new Producto();
+            $producto->setId($id);
+            $pro = $producto->getOne();
+
+            require_once 'views/productos/crear.php';
+        } else {
+            header('Location:' . base_url . 'producto/gestion');
+        }
+    }
+
+    public function eliminar()
+    {
+        Utils::isAdmin();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $producto = new Producto();
+            $producto->setId($id);
+            $delete = $producto->delete();
+            if ($delete) {
+                $_SESSION['delete'] = "Complete";
+            } else {
+                $_SESSION['delete'] = "Failed-1";
+            }
+        } else {
+            $_SESSION['delete'] = "Failed-2";
+        }
+        header('Location:' . base_url . 'producto/gestion');
     }
 }
