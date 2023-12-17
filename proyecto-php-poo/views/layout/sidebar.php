@@ -23,10 +23,10 @@
                     <a href="<?= base_url ?>categoria/index">Gestionar categorías</a>
                 </li>
                 <li>
-                    <a href="#">Gestionar pedidos</a>
+                    <a href="<?= base_url ?>producto/gestion">Gestionar productos</a>
                 </li>
                 <li>
-                    <a href="#">Gestionar productos</a>
+                    <a href="#">Gestionar pedidos</a>
                 </li>
             <?php endif; ?>
             <!-- Esto se muestra con cualquier usuario -->
