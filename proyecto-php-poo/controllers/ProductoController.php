@@ -5,6 +5,11 @@ class ProductoController
 
     public function index()
     {
+        $producto = new Producto();
+        $productos = $producto->getRandom(6);
+
+        // var_dump($productos->fetch_object());
+
         // Renderizar vista
         require_once 'views/productos/destacados.php';
     }
