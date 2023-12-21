@@ -157,6 +157,17 @@ class Producto
         return $productos->fetch_object();
     }
 
+    // Obtener productos de una categoria
+    public function getAllCategory()
+    {
+        $sql = "SELECT p.*, c.nombre AS 'catnombre' FROM productos p "
+            . "INNER JOIN categorias c ON c.id = p.categoria_id "
+            . "WHERE p.categoria_id = {$this->getCategoriaId()} "
+            . "ORDER BY id DESC";
+        $productos = $this->db->query($sql);
+        return $productos;
+    }
+
     public function save()
     {
         $sql = "INSERT INTO productos VALUES(null, {$this->getCategoriaId()},'{$this->getNombre()}', '{$this->getDescripcion()}', {$this->getPrecio()}, {$this->getStock()}, null, CURDATE(), '{$this->getImagen()}');";

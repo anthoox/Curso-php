@@ -2,6 +2,8 @@
 // conectamos con el modelo de categorias
 require_once 'models/categoria.php';
 require_once 'helpers/validatorForm.php';
+require_once 'models/producto.php';
+
 class CategoriaController
 {
 
@@ -32,5 +34,25 @@ class CategoriaController
         }
 
         header("Location:" . base_url . "categoria/index");
+    }
+
+    public function ver()
+    {
+        if (isset($_GET['id'])) {
+            // var_dump($_GET['id']);
+            $id = $_GET['id'];
+
+            // Conseguir categoria
+            $categoria = new Categoria();
+            $categoria->setId($id);
+            $categoria = $categoria->getOne();
+
+            // Conseguir productos
+            $producto = new Producto();
+            $producto->setCategoriaId($id);
+            $productos = $producto->getAllCategory();
+        }
+
+        require_once 'views/categoria/ver.php';
     }
 }
