@@ -18,4 +18,4 @@
     <h2>Camiseta Azul Ancha</h2>
     <p>30 Euros</p>
     <a class="button" href="">Comprar</a>
-</div>
+</div>/

@@ -13,7 +13,7 @@
             </a>
             <p class="description"><?= $product->descripcion ?></p>
             <p class="price"><?= $product->precio ?>€</p>
-            <a class="button" href="">Comprar</a>
+            <a class="button" href="<?= base_url ?>carrito/add&id=<?= $product->id ?>">Comprar</a>
         </div>
     </div>
 <?php else : ?>
