@@ -309,6 +309,10 @@ button {
     margin-bottom: 10px;
 }
 
+.img-carrito {
+    height: 80px;
+}
+
 .product a {
     color: black;
     text-decoration: none;
@@ -364,4 +368,22 @@ button {
     background-color: #222222;
     clear: both;
     border-top: 5px solid #01B1Ea;
+}
+
+.total-carrito {
+    width: 295px;
+    float: right;
+}
+
+.total-carrito h3 {
+    display: block;
+    float: left;
+    margin-top: 5px;
+}
+
+.button-pedido {
+    display: block;
+    float: right;
+    width: 100px;
+    text-align: center;
 }
