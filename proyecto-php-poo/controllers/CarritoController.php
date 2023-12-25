@@ -21,12 +21,22 @@ class CarritoController
         }
 
         if (isset($_SESSION['carrito'])) {
-        } else {
+            $counter = 0;
+            foreach ($_SESSION['carrito'] as $indice => $elemento) {
+                if ($elemento['id_producto'] == $producto_id) {
+                    $_SESSION['carrito'][$indice]['unidades']++;
+                    $counter++;
+                }
+            }
+        }
+        // Si counter no existe o vale 0
+        if (!isset($counter) || $counter == 0) {
             // Conseguir producto
             $producto = new Producto();
             $producto->setId($producto_id);
             $producto = $producto->getOne();
 
+            // Añadir al carrito
             if (is_object($producto)) {
                 $_SESSION['carrito'][] = array(
                     // Como es un objeto y no una instancia de la clase, se obtiene su valor de la siguiente forma:
@@ -47,6 +57,7 @@ class CarritoController
     public function delete_all()
     {
         unset($_SESSION['carrito']);
+        header("Location:" . base_url . "carrito/index");
     }
 
     public function remove()
