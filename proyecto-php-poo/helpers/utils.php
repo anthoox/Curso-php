@@ -38,7 +38,7 @@ class Utils
             'total' => 0
         );
 
-        if ($_SESSION['carrito']) {
+        if (isset($_SESSION['carrito'])) {
             $stats['count'] = count($_SESSION['carrito']);
 
             foreach ($_SESSION['carrito'] as $producto) {
