@@ -26,8 +26,13 @@ class PedidoController
                 $pedido->setDireccion($direccion);
                 $pedido->setLocalidad($localidad);
                 $pedido->setCoste($coste);
+
                 $save = $pedido->save();
-                if ($save) {
+
+                // Guardar linea pedido
+                $save_linea = $pedido->save_linea();
+
+                if ($save && $save_linea) {
                     $_SESSION['pedido'] = "completed";
                 } else {
                     $_SESSION['pedido'] = "failed";
@@ -35,9 +40,16 @@ class PedidoController
             } else {
                 $_SESSION['pedido'] = "failed";
             }
+
+            header(('Location:' . base_url . 'pedido/confirmado'));
         } else {
             // Redirigir
             header('Location' . base_url);
         }
+    }
+
+    public function confirmado()
+    {
+        require_once 'views/pedido/confirmado.php';
     }
 }

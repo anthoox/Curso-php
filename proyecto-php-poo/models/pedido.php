@@ -134,6 +134,28 @@ class Pedido
         $sql = "INSERT INTO pedidos VALUES(null, {$this->getUsuario_id()},'{$this->getProvincia()}', '{$this->getLocalidad()}', '{$this->getDireccion()}', {$this->getCoste()}, 'confirm', CURDATE(), CURTIME());";
         $save = $this->db->query($sql);
 
+
+        $result = false;
+        if ($save) {
+            $result = true;
+        }
+        return $result;
+    }
+
+    public function save_linea()
+    {
+        $sql = "SELECT LAST_INSERT_ID() as 'pedido';";
+        $query = $this->db->query($sql);
+        $pedido_id = $query->fetch_object()->pedido;
+
+        foreach ($_SESSION['carrito'] as $elemento) {
+            $producto = $elemento['producto'];
+
+            $insert = "INSERT INTO lineas_pedidos VALUES (NULL, {$pedido_id}, {$producto->id}, {$elemento['unidades']})";
+            $save = $this->db->query($insert);
+        }
+
+
         $result = false;
         if ($save) {
             $result = true;
