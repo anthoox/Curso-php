@@ -125,8 +125,33 @@ class Pedido
 
     public function getOne()
     {
-        $productos = $this->db->query("SELECT * FROM pedidos WHERE id={$this->getUsuario_id()};");
+        $sql = "SELECT * FROM pedidos WHERE id={$this->getUsuario_id()};";
+        $productos = $this->db->query($sql);
         return $productos->fetch_object();
+    }
+
+    public function getOneByUser()
+    {
+        $sql = "SELECT p.id, p.coste  FROM pedidos p "
+            . "WHERE p.usuario_id={$this->getUsuario_id()} ORDER BY id DESC LIMIT 1;";
+        $pedido = $this->db->query($sql);
+
+
+
+        return $pedido->fetch_object();
+    }
+
+    public function getProductosByPedido($id)
+    {
+
+
+        $sql = "SELECT pr.*, lp.unidades FROM productos pr "
+            . "INNER JOIN lineas_pedidos lp ON pr.id = lp.producto_id "
+            . "WHERE pedido_id={$id}";
+
+        $productos = $this->db->query($sql);
+
+        return $productos;
     }
 
     public function save()
