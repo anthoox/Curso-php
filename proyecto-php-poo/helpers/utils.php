@@ -22,6 +22,17 @@ class Utils
         }
     }
 
+    // Comprobar si esta identificado
+    public static function isIdentity()
+    {
+        // Si no existe:
+        if (!isset($_SESSION['identity'])) {
+            header("Location:" . base_url);
+        } else {
+            return true;
+        }
+    }
+
     public static function showCategorias()
     {
         require_once "models/categoria.php";

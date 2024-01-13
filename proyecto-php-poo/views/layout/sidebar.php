@@ -35,13 +35,13 @@
                     <a href="<?= base_url ?>producto/gestion">Gestionar productos</a>
                 </li>
                 <li>
-                    <a href="#">Gestionar pedidos</a>
+                    <a href="<?= base_url ?>pedido/gestion">Gestionar pedidos</a>
                 </li>
             <?php endif; ?>
             <!-- Esto se muestra con cualquier usuario -->
             <?php if (isset($_SESSION['identity'])) : ?>
                 <li>
-                    <a href="#">Mis pedidos</a>
+                    <a href="<?= base_url ?>pedido/misPedidos">Mis pedidos</a>
                 </li>
                 <li>
                     <a href="<?= base_url ?>usuario/logout">Cerra sesión</a>
