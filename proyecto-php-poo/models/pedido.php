@@ -3,6 +3,7 @@
 class Pedido
 {
 
+    private $id;
     private $usuario_id;
     private $provincia;
     private $localidad;
@@ -19,6 +20,22 @@ class Pedido
         // Se establece la conexión a la base de datos. La base de datos se importa en index.
         $this->db = DataBase::connect();
     }
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+
     public function getUsuario_id()
     {
         return $this->usuario_id;
@@ -125,7 +142,7 @@ class Pedido
 
     public function getOne()
     {
-        $sql = "SELECT * FROM pedidos WHERE id={$this->getUsuario_id()};";
+        $sql = "SELECT * FROM pedidos WHERE id={$this->getId()};";
         $productos = $this->db->query($sql);
         return $productos->fetch_object();
     }
