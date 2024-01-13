@@ -101,4 +101,14 @@ class PedidoController
             header('Location:' . base_url . 'pedido/mis_pedidos');
         }
     }
+
+    public function gestion(){
+        Utils::isAdmin();
+        $gestion = true;
+
+        $pedido = new Pedido();
+        $pedido->getAll();
+
+        require_once 'views/pedido/mis_pedidos.php';
+    }
 }
