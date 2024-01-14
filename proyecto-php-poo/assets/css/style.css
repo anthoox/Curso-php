@@ -406,3 +406,18 @@ button {
     margin: 0px auto;
     text-align: center;
 }
+
+.updown-unidades {
+    width: 50%;
+    margin: 0px auto;
+
+}
+
+.updown-unidades .button {
+    width: 20px;
+    display: block;
+    float: left;
+    padding: 2px;
+    margin: 7px auto;
+    margin-left: 2px;
+}
