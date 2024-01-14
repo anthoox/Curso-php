@@ -370,6 +370,12 @@ button {
     border-top: 5px solid #01B1Ea;
 }
 
+.delete-carrito {
+    width: 295px;
+    float: left;
+}
+
+
 .total-carrito {
     width: 295px;
     float: right;
@@ -381,9 +387,22 @@ button {
     margin-top: 5px;
 }
 
+.button-delete {
+    display: block;
+    float: left;
+    width: 100px;
+    text-align: center;
+}
+
 .button-pedido {
     display: block;
     float: right;
     width: 100px;
+    text-align: center;
+}
+
+.button-carrito {
+    width: 50px;
+    margin: 0px auto;
     text-align: center;
 }
